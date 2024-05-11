@@ -4,8 +4,8 @@ import { Feature } from '../interfaces/places'
 import { LoadingPlaces } from './'
 
 export const SearchResults = () => {
-  const { places, isLoadingPlaces } = useContext(PlacesContext)
-  const { map } = useContext(MapContext)
+  const { places, isLoadingPlaces, userLocation } = useContext(PlacesContext)
+  const { map, getRouteBetweenPlaces } = useContext(MapContext)
   const [activePlace, setActivePlace] = useState('')
   if (isLoadingPlaces) return <LoadingPlaces />
 
@@ -20,6 +20,13 @@ export const SearchResults = () => {
     })
   }
 
+  const getRoute = (place: Feature) => {
+    if (!userLocation) return
+    const lat = place.properties.coordinates.latitude
+    const lng = place.properties.coordinates.longitude
+    getRouteBetweenPlaces(userLocation, [lng, lat])
+  }
+
   return (
     <ul className={`list-group ${places.length > 0 && 'mt-2'}`}>
       {places?.map((place) => {
@@ -29,6 +36,7 @@ export const SearchResults = () => {
               activePlace === place.id ? 'active' : ''
             }  list-group-item list-group-item-action pointer`}
             key={place.id}
+            onClick={() => onPlaceClick(place)}
           >
             <h6>{place.properties.name_preferred}</h6>
             <p style={{ fontSize: '12px' }}>
@@ -40,7 +48,7 @@ export const SearchResults = () => {
                   ? 'btn-outline-light'
                   : 'btn-outline-primary'
               }`}
-              onClick={() => onPlaceClick(place)}
+              onClick={() => getRoute(place)}
             >
               Direcciones
             </button>

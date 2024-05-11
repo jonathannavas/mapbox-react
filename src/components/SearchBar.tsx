@@ -1,13 +1,15 @@
 import { ChangeEvent, useContext, useRef } from 'react'
-import { PlacesContext } from '../context'
+import { MapContext, PlacesContext } from '../context'
 import { SearchResults } from './SearchResults'
 export const SearchBar = () => {
   const debounceRef = useRef<NodeJS.Timeout>()
   const { searchPlacesByTerm } = useContext(PlacesContext)
+  const { handleResetRoutes } = useContext(MapContext)
 
   const handleQueryChanged = (e: ChangeEvent<HTMLInputElement>) => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(() => {
+      handleResetRoutes()
       searchPlacesByTerm(e.target.value)
     }, 1000)
   }
