@@ -2,7 +2,7 @@
 
 // @ts-ignore
 import { AnySourceData, LngLatBounds, Map, Marker, Popup } from '!mapbox-gl'
-import { useContext, useEffect, useMemo, useReducer } from 'react'
+import { useContext, useEffect, useReducer } from 'react'
 import { directionsApi } from '../../apis'
 import { DirectionsResponse } from '../../interfaces/directions'
 import { PlacesContext } from '../places/PlacesContext'
@@ -146,9 +146,16 @@ export const MapProvider = ({ children }: Props) => {
     })
   }
 
-  const values = useMemo(() => {
-    return { ...state, setMap, getRouteBetweenPlaces, handleResetRoutes }
-  }, [state, setMap, getRouteBetweenPlaces, handleResetRoutes])
-
-  return <MapContext.Provider value={values}>{children}</MapContext.Provider>
+  return (
+    <MapContext.Provider
+      value={{
+        ...state,
+        setMap,
+        getRouteBetweenPlaces,
+        handleResetRoutes,
+      }}
+    >
+      {children}
+    </MapContext.Provider>
+  )
 }

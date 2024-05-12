@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { searchApi } from '../../apis'
 import { getUserLocations } from '../../helpers'
 import { Feature, PlacesResponse } from '../../interfaces/places'
@@ -52,14 +52,14 @@ export const PlacesProvider = ({ children }: Props) => {
     return response.data.features
   }
 
-  const values = useMemo(() => {
-    return {
-      ...state,
-      searchPlacesByTerm,
-    }
-  }, [state, searchPlacesByTerm])
-
   return (
-    <PlacesContext.Provider value={values}>{children}</PlacesContext.Provider>
+    <PlacesContext.Provider
+      value={{
+        ...state,
+        searchPlacesByTerm,
+      }}
+    >
+      {children}
+    </PlacesContext.Provider>
   )
 }
