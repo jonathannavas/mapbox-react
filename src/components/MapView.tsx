@@ -21,7 +21,7 @@ export const MapView = () => {
       })
       setMap(map)
     }
-  }, [isLoading, setMap, userLocation])
+  }, [isLoading])
 
   if (isLoading) return <Loading />
 

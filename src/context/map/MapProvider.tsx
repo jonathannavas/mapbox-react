@@ -51,7 +51,7 @@ export const MapProvider = ({ children }: Props) => {
 
       dispatch({ type: 'SET_MARKERS', payload: newMarkers })
     }
-  }, [places, state.map, state.markers])
+  }, [places])
 
   const setMap = (map: Map) => {
     const myLocationPopup = new Popup().setHTML(
