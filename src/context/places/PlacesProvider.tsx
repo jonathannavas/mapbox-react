@@ -57,7 +57,7 @@ export const PlacesProvider = ({ children }: Props) => {
       ...state,
       searchPlacesByTerm,
     }
-  }, [state])
+  }, [state, searchPlacesByTerm])
 
   return (
     <PlacesContext.Provider value={values}>{children}</PlacesContext.Provider>

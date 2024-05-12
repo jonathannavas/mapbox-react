@@ -148,7 +148,7 @@ export const MapProvider = ({ children }: Props) => {
 
   const values = useMemo(() => {
     return { ...state, setMap, getRouteBetweenPlaces, handleResetRoutes }
-  }, [state, setMap])
+  }, [state, setMap, getRouteBetweenPlaces, handleResetRoutes])
 
   return <MapContext.Provider value={values}>{children}</MapContext.Provider>
 }
